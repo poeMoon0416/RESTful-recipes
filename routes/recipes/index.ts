@@ -5,7 +5,7 @@ import { RecipeView } from "../../utils/RecipeView.ts";
 export const handler: Handlers<string | null> = {
     // レシピを作成
     async POST(req, _ctx) {
-        const kv = await Deno.openKv("db");
+        const kv = await Deno.openKv();
         // id生成(AUTO_INCREMENT)
         const entries = await kv.list<Recipe>({ prefix: ["recipes"] });
         const recipes: Recipe[] = [];
@@ -53,7 +53,7 @@ export const handler: Handlers<string | null> = {
 
     // 全レシピ一覧を返す
     async GET(_req, _ctx) {
-        const kv = await Deno.openKv("db");
+        const kv = await Deno.openKv();
         const entries = await kv.list<Recipe>({ prefix: ["recipes"] });
         const recipes: RecipeView[] = [];
         for await (const entry of entries) {

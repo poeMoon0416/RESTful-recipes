@@ -4,7 +4,7 @@ import { Recipe } from "../../utils/Recipe.ts";
 export const handler: Handlers<string | null> = {
     // 指定レシピ一つを返す
     async GET(_req, ctx) {
-        const kv = await Deno.openKv("db");
+        const kv = await Deno.openKv();
         const id = Number(ctx.params.id);
         const key = ["recipes", id];
         const ev = (await kv.get<Recipe>(key)).value!;
@@ -27,7 +27,7 @@ export const handler: Handlers<string | null> = {
     },
 
     async PATCH(req, ctx) {
-        const kv = await Deno.openKv("db");
+        const kv = await Deno.openKv();
         const id = Number(ctx.params.id);
         // updated_at用のtoday生成
         const todaySrc = new Date();
@@ -82,7 +82,7 @@ export const handler: Handlers<string | null> = {
 
     // 指定レシピの削除
     async DELETE(req, ctx) {
-        const kv = await Deno.openKv("db");
+        const kv = await Deno.openKv();
         const id = ctx.params.id;
         const key = ["recipes", id];
         const res = (await fetch(`${new URL(req.url).origin}/recipes/${id}`))

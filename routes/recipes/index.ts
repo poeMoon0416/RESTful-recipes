@@ -69,6 +69,8 @@ export const handler: Handlers<string | null> = {
             };
             recipes.push(recipe);
         }
-        return new Response(JSON.stringify({ recipes: recipes }));
+        return new Response(JSON.stringify({ recipes: recipes }), {
+            headers: { "Content-Type": "application/json" },
+        });
     },
 };

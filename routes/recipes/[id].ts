@@ -22,6 +22,7 @@ export const handler: Handlers<string | null> = {
                 message: "Recipe details by id",
                 recipe: [recipe],
             }),
+            { headers: { "Content-Type": "application/json" } },
         );
     },
 
@@ -74,7 +75,9 @@ export const handler: Handlers<string | null> = {
                 message: "Recipe update failed!",
                 "required": "title, making_time, serves, ingredients, cost",
             };
-        return new Response(JSON.stringify(resObj));
+        return new Response(JSON.stringify(resObj), {
+            headers: { "Content-Type": "application/json" },
+        });
     },
 
     // 指定レシピの削除
@@ -91,6 +94,8 @@ export const handler: Handlers<string | null> = {
                 message: "Recipe successfully removed!",
             }
             : { message: "No Recipe found" };
-        return new Response(JSON.stringify(resObj));
+        return new Response(JSON.stringify(resObj), {
+            headers: { "Content-Type": "application/json" },
+        });
     },
 };

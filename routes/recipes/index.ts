@@ -46,7 +46,9 @@ export const handler: Handlers<string | null> = {
                 message: "Recipe creation failed!",
                 "required": "title, making_time, serves, ingredients, cost",
             };
-        return new Response(JSON.stringify(resObj));
+        return new Response(JSON.stringify(resObj), {
+            headers: { "Content-Type": "application/json" },
+        });
     },
 
     // 全レシピ一覧を返す

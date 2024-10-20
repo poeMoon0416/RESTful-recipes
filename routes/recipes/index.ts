@@ -36,7 +36,7 @@ export const handler: Handlers<string | null> = {
         const today =
             `${todayYear}-${todayMonth}-${todayDate} ${todayHours}:${todayMinutes}:${todaySeconds}`;
         // メイン処理
-        console.log(await req);
+        // console.log(await req);
         const recipe = (await req.json()) as Recipe;
         recipe.id = id;
         recipe.created_at = today;

@@ -3,7 +3,9 @@ import { Recipe } from "../../utils/Recipe.ts";
 import { RecipeView } from "../../utils/RecipeView.ts";
 
 export const handler: Handlers<string | null> = {
-    // レシピを作成
+    // レシピを作成(ok)
+    // const res = await fetch("http://localhost:8000/recipes/", {method: "POST", headers: {}, body: JSON.stringify({title: "芋煮", making_time: "xyz", serves: "abc", ingredients: "def", cost: 123})});
+    // res.json();
     async POST(req, _ctx) {
         const kv = await Deno.openKv();
         // id生成(AUTO_INCREMENT)
@@ -34,6 +36,7 @@ export const handler: Handlers<string | null> = {
         const today =
             `${todayYear}-${todayMonth}-${todayDate} ${todayHours}:${todayMinutes}:${todaySeconds}`;
         // メイン処理
+        console.log(await req);
         const recipe = (await req.json()) as Recipe;
         recipe.id = id;
         recipe.created_at = today;
@@ -51,7 +54,9 @@ export const handler: Handlers<string | null> = {
         });
     },
 
-    // 全レシピ一覧を返す
+    // 全レシピ一覧を返す(ok)
+    // const res = await fetch("http://localhost:8000/recipes/");
+    // res.json();
     async GET(_req, _ctx) {
         const kv = await Deno.openKv();
         const entries = await kv.list<Recipe>({ prefix: ["recipes"] });

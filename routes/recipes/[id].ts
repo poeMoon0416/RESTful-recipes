@@ -2,7 +2,9 @@ import { Handlers } from "$fresh/server.ts";
 import { Recipe } from "../../utils/Recipe.ts";
 
 export const handler: Handlers<string | null> = {
-    // 指定レシピ一つを返す
+    // 指定レシピ一つを返す(ok)
+    // const res = await fetch("http://localhost:8000/recipes/2");
+    // res.json();
     async GET(_req, ctx) {
         const kv = await Deno.openKv();
         const id = Number(ctx.params.id);
@@ -26,6 +28,9 @@ export const handler: Handlers<string | null> = {
         );
     },
 
+    // 指定レシピの更新(ok)
+    // const res = await fetch("http://localhost:8000/recipes/2", {method: "PATCH", body: JSON.stringify({title: "芋煮", making_time: "50分", serves: "10人", ingredients: "芋, 醤油, 豚肉", cost: 2000})});
+    // res.json();
     async PATCH(req, ctx) {
         const kv = await Deno.openKv();
         const id = Number(ctx.params.id);
@@ -80,11 +85,14 @@ export const handler: Handlers<string | null> = {
         });
     },
 
-    // 指定レシピの削除
+    // 指定レシピの削除(ok)
+    // const res = await fetch("http://localhost:8000/recipes/3", {method: "DELETE"});
+    // res.json();
     async DELETE(req, ctx) {
         const kv = await Deno.openKv();
-        const id = ctx.params.id;
+        const id = Number(ctx.params.id);
         const key = ["recipes", id];
+        // console.log(key);
         const res = (await fetch(`${new URL(req.url).origin}/recipes/${id}`))
             .json();
         const ok = await (res.then((_recipe) => true).catch((_e) => false));

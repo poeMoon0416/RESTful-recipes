@@ -3,6 +3,8 @@ import { Recipe } from "../../utils/Recipe.ts";
 import { RecipeView } from "../../utils/RecipeView.ts";
 
 export const handler: Handlers<string | null> = {
+    // AWS動作確認ok
+
     // レシピを作成(ok)
     // const res = await fetch("http://localhost:8000/recipes/", {method: "POST", headers: {}, body: JSON.stringify({title: "芋煮", making_time: "xyz", serves: "abc", ingredients: "def", cost: 123})});
     // res.json();

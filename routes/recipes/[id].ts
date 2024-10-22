@@ -4,6 +4,7 @@ import { Recipe } from "../../utils/Recipe.ts";
 export const handler: Handlers<string | null> = {
     // AWS環境でもPATCHだけは動かない。(501 no implements)
     // PUTだとすべて動作確認成功
+    // deno upgradeでAWS動作確認ok
 
     // 指定レシピ一つを返す(ok)
     // const res = await fetch("http://localhost:8000/recipes/3");
@@ -33,9 +34,9 @@ export const handler: Handlers<string | null> = {
 
     // 指定レシピの更新(ok => ng)
     // ローカルでは成功したが、Deno Deployでのみ500エラーが出る。
-    // const res = await fetch("http://localhost:8000/recipes/3", {method: "PUT", body: JSON.stringify({title: "芋煮", making_time: "50分", serves: "10人", ingredients: "芋, 醤油, 豚肉", cost: 2000})});
+    // const res = await fetch("http://localhost:8000/recipes/3", {method: "PATCH", body: JSON.stringify({title: "芋煮", making_time: "50分", serves: "10人", ingredients: "芋, 醤油, 豚肉", cost: 2000})});
     // res.json();
-    async PUT(req, ctx) {
+    async PATCH(req, ctx) {
         const kv = await Deno.openKv();
         const id = Number(ctx.params.id);
         // updated_at用のtoday生成

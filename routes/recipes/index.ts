@@ -6,17 +6,18 @@ export const handler: Handlers<string | null> = {
     // AWS動作確認ok
 
     // レシピを作成(ok)
+    // idをlengthからmaxに変更した(削除でid歯抜けになるので)
     // const res = await fetch("http://localhost:8000/recipes/", {method: "POST", headers: {}, body: JSON.stringify({title: "芋煮", making_time: "xyz", serves: "abc", ingredients: "def", cost: 123})});
     // res.json();
     async POST(req, _ctx) {
         const kv = await Deno.openKv();
         // id生成(AUTO_INCREMENT)
         const entries = await kv.list<Recipe>({ prefix: ["recipes"] });
-        const recipes: Recipe[] = [];
+        let maxId = 0;
         for await (const entry of entries) {
-            recipes.push(entry.value);
+            maxId = maxId > entry.value.id ? maxId : entry.value.id;
         }
-        const id = recipes.length + 1;
+        const id = maxId + 1;
         // created_at, updated_at用のtoday生成
         const todaySrc = new Date();
         const todayYear = String(todaySrc.getFullYear());
